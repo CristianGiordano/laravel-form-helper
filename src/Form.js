@@ -55,8 +55,13 @@ export default class Form {
 
         return new Promise((resolve, reject) => {
             this.startProcessing();
+            let payload = this.payload();
 
-            return axios[this.method](this.url)
+            if (this.isGetRequest()) {
+                payload = { params: payload }
+            }
+
+            return axios[this.method](this.url, payload)
                 .then((response) => {
                     this.finishProcessing();
 
@@ -68,5 +73,20 @@ export default class Form {
                     reject(error)
                 });
         });
+    }
+
+    payload() {
+        let payload = JSON.parse(JSON.stringify(this))
+        let attributes = ['busy', 'successful', 'errors', 'method', 'url']
+
+        attributes.forEach((attribute) => {
+            delete payload[attribute]
+        });
+
+        return payload;
+    }
+
+    isGetRequest() {
+        return this.method.toUpperCase() === 'GET';
     }
 }

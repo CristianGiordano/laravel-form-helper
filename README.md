@@ -1,7 +1,7 @@
 # Laravel Axios Form Helper
 
 ### TODO
-- [ ] Pass data through request
+- [X] Pass data through request
 - [ ] Handle files
 - [ ] Handle nested attributes
 - [ ] Write documentation

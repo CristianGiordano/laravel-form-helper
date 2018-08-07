@@ -64,8 +64,6 @@ test('A non standard HTTP verb throws an error', () => {
     }).toThrow()
 })
 
-
-
 test('Data can be passed and merged', () => {
     let form = new Form('GET', '/dogs', {foo: 'bar'});
 
@@ -135,7 +133,7 @@ test('Test a successful request', () => {
     let actual = form.submit();
 
     // Assert pre response conditions
-    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs');
+    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs', {params: {}});
     expect(actual).toBeInstanceOf(Promise);
     expect(form.busy).toBe(true);
     expect(form.successful).toBe(false);
@@ -159,7 +157,7 @@ test('A failed request', () => {
     let actual = form.submit();
 
     // Assert pre response conditions
-    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs');
+    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs', {params: {}});
     expect(actual).toBeInstanceOf(Promise);
     expect(form.busy).toBe(true);
     expect(form.successful).toBe(false);
@@ -185,7 +183,7 @@ test('Additional requests on the same form will be prevented', () => {
     global.console.warn = jest.fn();
 
     // Assert pre response conditions
-    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs');
+    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs', {params: {}});
     expect(actual).toBeInstanceOf(Promise);
 
     actual = form.submit();
@@ -195,4 +193,46 @@ test('Additional requests on the same form will be prevented', () => {
 
     // Restore console
     global.console.warn = warn;
+});
+
+test('It will send data with the request', () => {
+    let form = new Form('POST', '/dogs', {
+        name: 'Eva', breed: 'Northern Inuit', temper: 'Perfect'
+    });
+
+    form.submit();
+
+    expect(AxiosMock.post).toHaveBeenCalledWith('/dogs', {
+        name: 'Eva', breed: 'Northern Inuit', temper: 'Perfect'
+    });
+});
+
+test('GET request data is passed as a params property to the config', () => {
+    let form = new Form('GET', '/dogs', {
+        page: 5, items: 100, sort: 'cuteness'
+    });
+
+    form.submit();
+
+    expect(AxiosMock.get).toHaveBeenCalledWith('/dogs', {
+        params: {
+            page: 5, items: 100, sort: 'cuteness'
+        }
+    })
+});
+
+test('Nest attributes are sent', () => {
+    let form = new Form('POST', '/dogs', {
+        user: {
+            name: 'Phoenix', age: '33'
+        }
+    });
+
+    form.submit();
+
+    expect(AxiosMock.post).toHaveBeenCalledWith('/dogs', {
+        user: {
+            name: 'Phoenix', age: '33'
+        }
+    });
 });
