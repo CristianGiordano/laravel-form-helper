@@ -1,5 +1,5 @@
 {
-  "name": "@sneek/laravel-form-helper",
+  "name": "laravel-form-helper",
   "version": "0.1.0",
   "description": "Helper to work with JSON APIs and Laravel Errors",
   "main": "index.js",
