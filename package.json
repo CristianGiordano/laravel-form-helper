@@ -1,6 +1,6 @@
 {
   "name": "laravel-form-helper",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helper to work with JSON APIs and Laravel Errors",
   "main": "index.js",
   "author": "Sneek <hello@sneekdigital.co.uk>",
