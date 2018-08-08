@@ -10,8 +10,13 @@ export const success = {
 
 // TODO: Mock the full response details
 export const error = {
-    data: {
-        foo: ['The foo field is required']
-    },
-    status: 422,
+    response: {
+        data: {
+            message: 'The given data was invalid',
+            errors: {
+                foo: ['The foo field is required']
+            }
+        },
+        status: 422,
+    }
 };

@@ -68,7 +68,7 @@ export default class Form {
                     resolve(response);
                 })
                 .catch((error) => {
-                    this.finishProcessingWithErrors(error.data);
+                    this.finishProcessingWithErrors(error.response.data.errors);
 
                     reject(error)
                 });
