@@ -236,3 +236,12 @@ test('Nest attributes are sent', () => {
         }
     });
 });
+
+test('Will return an error', () => {
+    let form = new Form('GET', '/dogs');
+    form.finishProcessingWithErrors({
+        foo: ['The foo field is required']
+    });
+
+    expect(form.error('foo')).toEqual('The foo field is required');
+})

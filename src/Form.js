@@ -48,6 +48,10 @@ export default class Form {
         return this.errors.isNotEmpty();
     }
 
+    error(field) {
+        return this.errors.get(field);
+    }
+
     submit() {
         if (this.busy) {
             return console.warn('Double form submission, either debounce or prevent multiple form submissions');
